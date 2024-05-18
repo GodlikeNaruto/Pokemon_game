@@ -26,7 +26,7 @@ def get_hp(message):
         bot.send_message(Pokemon.hp())
 
 @bot.message_handler(commands=['attack'])
-def get_hp(message):
+def get_attack(message):
     func = message.text().split()
     if len(func) == 2:
         bot.send_message(Pokemon.attack(float(func[1])))
@@ -34,7 +34,7 @@ def get_hp(message):
         bot.send_message(Pokemon.attack())
 
 @bot.message_handler(commands=['speed'])
-def get_hp(message):
+def get_speed(message):
     func = message.text().split()
     if len(func) == 2:
         bot.send_message(Pokemon.speed(float(func[1])))
