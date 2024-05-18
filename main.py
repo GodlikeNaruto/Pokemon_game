@@ -17,6 +17,29 @@ def go(message):
     else:
         bot.reply_to(message, "Ты уже создал себе покемона")
 
+@bot.message_handler(commands=['hp'])
+def get_hp(message):
+    func = message.text().split()
+    if len(func) == 2:
+        bot.send_message(Pokemon.hp(float(func[1])))
+    else:
+        bot.send_message(Pokemon.hp())
+
+@bot.message_handler(commands=['attack'])
+def get_hp(message):
+    func = message.text().split()
+    if len(func) == 2:
+        bot.send_message(Pokemon.attack(float(func[1])))
+    else:
+        bot.send_message(Pokemon.attack())
+
+@bot.message_handler(commands=['speed'])
+def get_hp(message):
+    func = message.text().split()
+    if len(func) == 2:
+        bot.send_message(Pokemon.speed(float(func[1])))
+    else:
+        bot.send_message(Pokemon.speed())
 
 bot.infinity_polling(none_stop=True)
 

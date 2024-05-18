@@ -21,20 +21,17 @@ class Pokemon:
     def hp(self, hp=-1):
         if hp > 0:
             self.hp = hp
-        if hp == -1:
-            return self.hp
+        return self.hp
         
     def attack(self, attack=-1):
         if attack > 0:
             self.attack = attack
-        if attack == -1:
-            return self.attack
+        return self.attack
         
     def speed(self, speed=-1):
         if speed > 0:
             self.speed = speed
-        if speed == -1:
-            return self.speed
+        return self.speed
 
     # Метод для получения картинки покемона через API
     def get_img(self):
