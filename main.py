@@ -1,5 +1,6 @@
 import telebot 
 from config import token
+from random import randint
 
 from logic import Pokemon
 
@@ -17,29 +18,52 @@ def go(message):
     else:
         bot.reply_to(message, "Ты уже создал себе покемона")
 
+@bot.message_handler(commands=['attack'])
+def attack(message):
+    if message.reply_to_message:
+        pokemon_1 = Pokemon.pokemons[message.from_user.username]
+        pokemon_2 = Pokemon.pokemons[message.reply_to_message.from_user.username]
+        if pokemon_1.category == 'Assasin':
+            skill = pokemon_1.special_skill(pokemon_2)
+            if skill:
+                bot.send_message(message.chat.id, skill)
+        elif pokemon_1.category == 'Fighter':
+            skill = pokemon_1.sup_attack(pokemon_2)
+            if skill:
+                bot.send_message(message.chat.id, skill)
+        if pokemon_2.category() == 'Wizard':
+            skill = pokemon_2.shield()
+            if skill:
+                bot.send_message(message.chat.id, skill)
+            else:
+                result = pokemon_1.attack(pokemon_2)
+        elif pokemon_2.category == 'Healer':
+            skill = pokemon_2.heal_100()
+            if skill:
+                bot.send_message(message.chat.id, skill)
+        elif pokemon_2.category == 'Tank':
+            skill = pokemon_2.dmg_reflect(pokemon_1)
+            if skill:
+                bot.send_message(message.chat.id, skill)
+        result = pokemon_1.attack(pokemon_2)
+        bot.send_message(message.chat.id, result)
+    else:
+        bot.reply_to(message, "Выбери противника (ответь на другое сообщение командой /attack)")
+
 @bot.message_handler(commands=['hp'])
 def get_hp(message):
-    func = message.text().split()
-    if len(func) == 2:
-        bot.send_message(Pokemon.hp(float(func[1])))
-    else:
-        bot.send_message(Pokemon.hp())
+    pokemon = Pokemon.pokemons[message.from_user.username]
+    bot.send_message(message.chat.id, pokemon.hp_f())
 
 @bot.message_handler(commands=['attack'])
 def get_attack(message):
-    func = message.text().split()
-    if len(func) == 2:
-        bot.send_message(Pokemon.attack(float(func[1])))
-    else:
-        bot.send_message(Pokemon.attack())
+    pokemon = Pokemon.pokemons[message.from_user.username]
+    bot.send_message(message.chat.id, str(pokemon.attack_f()))
 
 @bot.message_handler(commands=['speed'])
 def get_speed(message):
-    func = message.text().split()
-    if len(func) == 2:
-        bot.send_message(Pokemon.speed(float(func[1])))
-    else:
-        bot.send_message(Pokemon.speed())
+    pokemon = Pokemon.pokemons[message.from_user.username]
+    bot.send_message(message.chat.id, pokemon.speed_f())
 
 bot.infinity_polling(none_stop=True)
 
